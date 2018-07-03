@@ -1,4 +1,5 @@
 import { Store } from 'vuex';
+import Vue from 'vue';
 
 let state = {
   todos: [
@@ -60,4 +61,38 @@ let store = Store({
   getters,
   mutations, 
   actions,
+});
+
+Vue.component('todo-list', {
+  computed: {
+    todos() {
+      return this.$store.getters.getTodos;
+    }
+  },
+  methods: {
+    toggleTodo: (id) => {
+      this.$store.dispatch('toggleTodo', id);
+    },
+    deleteTodo: (id) => {
+      this.$store.dispatch('deleteTodo', id);
+    }
+  },
+  template: '#todo-list',
+});
+
+let app = new Vue({
+  data: () => ({
+    task: '',
+    newId: 3
+  }),
+  methods: {
+    addTodo: () => {
+      this.$store.dispatch('addTodo', this);
+      this.newId++;
+      this.task = '';
+    }
+  },
+  store,
+  el: '#app',
+  template: '#app-template',
 });
