@@ -1,3 +1,5 @@
+import { Store } from 'vuex';
+
 let state = {
   todos: [
     {
@@ -40,3 +42,22 @@ const mutations = {
     todos.splice(index, 1);
   },
 };
+
+const actions = {
+  addTodo: (ctx, payload) => {
+    ctx.commit('ADD_TODO', payload);
+  },
+  toggleTodo: (ctx, payload) => {
+    ctx.commit('TOGGLE_TODO', payload);
+  },
+  deleteTodo: (ctx, payload) => {
+    ctx.commit('DELETE_TODO', payload);
+  },
+};
+
+let store = Store({
+  state,
+  getters,
+  mutations, 
+  actions,
+});
